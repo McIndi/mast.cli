@@ -65,7 +65,7 @@ class Cli(object):
                 flag = ('-{}'.format(arg[0]).upper(), '--{}'.format(arg))
             # otherwise no short option
             else:
-                flag = ('--{}'.format(arg))
+                flag = ('--{}'.format(arg), )
             if isinstance(default, basestring):
                 _parser.add_argument(*flag, type=str, default=default)
             elif isinstance(default, list):
@@ -79,6 +79,8 @@ class Cli(object):
                         *flag, action='store_true', default=default)
             elif isinstance(default, int):
                 _parser.add_argument(*flag, type=int, default=default)
+            elif isinstance(default, float):
+                _parser.add_argument(*flag, type=float, default=default)
 
     def command(self):
         def inner(fn):
