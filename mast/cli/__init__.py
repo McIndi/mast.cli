@@ -56,16 +56,17 @@ class Cli(object):
                 _parser.add_argument(arg)
 
         for arg, default in keywords:
+            _arg = arg.replace("_", "-")
             # Try the lower case first letter for the short option first
             params = _parser._option_string_actions
             if '-{}'.format(arg[0]) not in params:
-                flag = ('-{}'.format(arg[0]), '--{}'.format(arg))
+                flag = ('-{}'.format(arg[0]), '--{}'.format(_arg))
             # Then the upper-case first letter for the short option
             elif '-{}'.format(arg[0]).upper() not in params:
-                flag = ('-{}'.format(arg[0]).upper(), '--{}'.format(arg))
+                flag = ('-{}'.format(arg[0]).upper(), '--{}'.format(_arg))
             # otherwise no short option
             else:
-                flag = ('--{}'.format(arg), )
+                flag = ('--{}'.format(_arg), )
             if isinstance(default, basestring):
                 _parser.add_argument(*flag, type=str, default=default)
             elif isinstance(default, list):
@@ -99,4 +100,3 @@ class Cli(object):
         for arg in _args:
             kwargs[arg] = getattr(args, arg)
         func(**kwargs)
-
