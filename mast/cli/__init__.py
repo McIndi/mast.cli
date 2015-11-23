@@ -18,7 +18,8 @@ class Cli(object):
         self.main = main
         self.optionals = optionals
         self.functions = {}
-        self.parser = argparse.ArgumentParser(description=description,
+        self.parser = argparse.ArgumentParser(
+            description=description,
             formatter_class=argparse.RawDescriptionHelpFormatter)
         if self.main is None:
             self.subparsers = self.parser.add_subparsers()
@@ -38,7 +39,9 @@ class Cli(object):
         defaults = [] if not defaults else defaults
 
         if self.main is None:
-            _parser = self.subparsers.add_parser(name, description=desc,
+            _parser = self.subparsers.add_parser(
+                name,
+                description=desc,
                 formatter_class=argparse.RawDescriptionHelpFormatter)
             _parser.set_defaults(func=self.functions[name])
         else:
