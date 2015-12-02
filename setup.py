@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name = "mast.cli",
-    version = "2.0.0",
+    version = "2.1.0",
     author = "Clifford Bressette",
     author_email = "cliffordbressette@mcindi.com",
     description = ("Dynamically create a CLI from function based on signature"),
