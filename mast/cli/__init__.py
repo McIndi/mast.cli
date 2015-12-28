@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """
+_module_: `mast.cli`
+
 Provide an easy way to convert a function to a Command Line Program.
 
 There are two main methods in the one class provided (Cli):
 
-* __command__ - A decorator which converts a function to a CLI based
+* `command`: A decorator which converts a function to a CLI based
 on function signature
-* __run__ - A method which parses the command line arguments and
+* `run`: A method which parses the command line arguments and
 executes the appropriate function
 """
 
@@ -17,6 +19,9 @@ import argparse
 
 class Cli(object):
     """
+    _class_: `mast.cli.Cli()`: see `mast.cli.Cli.__init__` for arguments
+    to the constructor.
+
     This is a class which can be used to dynamically generate a
     command line interface for a function based on the function's
     signature.
@@ -79,21 +84,25 @@ class Cli(object):
     """
     def __init__(self, description="", main=None, optionals=None):
         """
+        _method_: `mast.cli.Cli.__init__(self, description="", main=None, optionals=None)`
+
         This is the constructor for this class. A few options are
         available which allows defining how the program will appear
         to the user.
 
-        * __description__ - This is the description which will be
+        Parameters:
+
+        * `description`: This is the description which will be
         displayed (along with details on the available parameters) to
         the user when they provide a `-h` or `--help` on the command
         line
-        * __main__ - If you provide an argument to this parameter,
+        * `main`: If you provide an argument to this parameter,
         it should be a function, and this function will be treated
         as the main function and it will be executed when your program
         is called from the command line. __NOTE__ that if `main` is
         provided, you cannot create sub-commands using the `command`
         decorator.
-        * __optionals__ - if provided, `optionals` should be a `dict`
+        * `optionals`: If provided, `optionals` should be a `dict`
         containing the name and value of optional arguments. Any parameter
         not in this `dict` will be considered required by your program.
         """
@@ -110,10 +119,16 @@ class Cli(object):
 
     def create_subparser(self, fn):
         """
+        _method_: `mast.cli.Cli.create_subparser(self, fn)`
+
         __Internal use only__
 
         collects information about decorated function, builds a
-        subparser then returns the function unchanged
+        subparser then returns the function unchanged.
+
+        Parameters:
+
+        * `fn`: The function to create a sub-command for.
         """
         name = fn.__name__
         self.functions[name] = fn
@@ -174,10 +189,38 @@ class Cli(object):
 
     def command(self):
         """
+        _method_: `mast.cli.Cli.command(self)`
+
         This decorator allows you to decorate many functions which
         will then be available to the user as sub-commands. Default
         arguments to all parameters will be required. Please see above
         for how default arguments are mapped to types.
+
+        Parameters:
+
+        This method accepts no arguments.
+
+        Usage
+
+            :::python
+            from mast.cli import Cli
+
+            cli = Cli()
+
+            @cli.command
+            def function_1(param=""):
+                do_something()
+
+            @cli.command
+            def function_2(param=""):
+                do_something()
+
+            if __name__ == "__main__":
+                try:
+                    cli.run()
+                except:
+                    logger.exception()
+                    raise
         """
         def inner(fn):
             if self.main is not None:
@@ -189,8 +232,14 @@ class Cli(object):
 
     def run(self):
         """
+        _method_: `mast.cli.Cli.run(self)`
+
         This method will attempt to parse the provided arguments and
         execute the required function.
+
+        Parameters:
+
+        This method accepts no arguments.
         """
         args = self.parser.parse_args()
         func = args.func
