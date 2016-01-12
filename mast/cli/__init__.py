@@ -174,7 +174,7 @@ class Cli(object):
             if isinstance(default, basestring):
                 _parser.add_argument(*flag, type=str, default=default)
             elif isinstance(default, list):
-                _parser.add_argument(*flag, nargs='+')
+                _parser.add_argument(*flag, action='append')
             elif isinstance(default, bool):
                 if default:
                     _parser.add_argument(
