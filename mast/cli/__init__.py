@@ -11,11 +11,12 @@ on function signature
 * `run`: A method which parses the command line arguments and
 executes the appropriate function
 """
-
+import os
 import sys
 import inspect
 import argparse
 
+__version__ = "{}-0".format(os.environ["MAST_VERSION"])
 
 class Cli(object):
     """
